@@ -1,295 +1,34 @@
-# 🚀 Complete Cline Setup Guide
+# Setup notes
 
-Welcome to the most comprehensive Cline setup guide! This will take you from zero to productive AI-powered development in under 30 minutes.
+These notes describe how to use the examples in this repository. For current installation requirements, provider configuration and Cline features, see the [official documentation](https://docs.cline.bot/).
 
-## 📋 Prerequisites
+## Start with a working Cline installation
 
-### Required Software
-- **VS Code**: Latest stable version ([Download here](https://code.visualstudio.com/))
-- **Node.js**: Version 18+ ([Download here](https://nodejs.org/))
-- **Git**: Latest version ([Download here](https://git-scm.com/))
+Install Cline using its official instructions and configure the provider you intend to use. Check that you can open a project and ask a small question about its code before adding extra configuration.
 
-### Recommended VS Code Extensions
-```json
-{
-  "recommendations": [
-    "saoudrizwan.claude-dev",          // Cline extension
-    "ms-vscode.vscode-typescript-next", // TypeScript support
-    "esbenp.prettier-vscode",          // Code formatting
-    "dbaeumer.vscode-eslint",          // Linting
-    "bradlc.vscode-tailwindcss",       // Tailwind CSS support
-    "ms-vscode.vscode-json"            // JSON support
-  ]
-}
-```
+## Project instructions
 
-## 🎯 Step 1: Install Cline
+Read the [starter instructions](../configs/starter-clinerules.md) and adapt them to your project's languages, conventions and verification commands. Remove rules that do not apply.
 
-### Option A: VS Code Marketplace
-1. Open VS Code
-2. Go to Extensions (Ctrl/Cmd + Shift + X)
-3. Search for "Cline"
-4. Click "Install" on the official Cline extension
+Cline supports project guidance through `.clinerules`. Use its Rules interface or the format described in the current documentation to add your instructions. Do not overwrite existing project rules without reviewing them.
 
-### Option B: Command Line
-```bash
-code --install-extension saoudrizwan.claude-dev
-```
+## Project context
 
-### Option C: VSIX File
-1. Download the latest VSIX from [Cline releases](https://github.com/cline/cline/releases)
-2. Install via command: `code --install-extension cline-latest.vsix`
+The [project brief](../configs/memory-bank-template/project-brief.md) and [technical context](../configs/memory-bank-template/tech-stack.md) templates can be copied into your project's documentation. Replace the example content with facts about your system, and tell the assistant which files to read.
 
-## 🔑 Step 2: Configure API Access
+Keep credentials and private customer data out of shared templates.
 
-### Anthropic Claude (Recommended)
-1. Visit [Anthropic Console](https://console.anthropic.com/)
-2. Create an account or sign in
-3. Navigate to "API Keys"
-4. Create a new API key
-5. Copy the key (starts with `sk-ant-`)
+## First task
 
-### Alternative Providers
-- **OpenRouter**: Great for multiple models ([Get API key](https://openrouter.ai/))
-- **OpenAI**: Direct GPT access ([Get API key](https://platform.openai.com/api-keys))
-- **Google AI Studio**: For Gemini models ([Get API key](https://aistudio.google.com/))
+Try the project orientation example in the [prompt collection](../prompts/README.md). Then choose a small, well-defined change and check its diff and relevant behaviour.
 
-### Add API Key to Cline
-1. Open VS Code
-2. Press Ctrl/Cmd + Shift + P
-3. Type "Cline: Open"
-4. Click the settings icon in Cline panel
-5. Add your API key and select your model
+## Tool connections
 
-## 🛠️ Step 3: Essential Configuration
+Add MCP servers or other integrations only when the task needs them. Follow the tool provider's current setup instructions and review the access it requests. This repository does not bundle or maintain an MCP server.
 
-### Create Your First .clinerules File
-```bash
-# In your project root
-touch .clinerules
-```
+## Troubleshooting
 
-Add this starter configuration:
-```markdown
-# Project Configuration for Cline
-
-## Development Standards
-- Use TypeScript for all new code
-- Follow ESLint configuration
-- Write tests for business logic
-- Use conventional commits (feat/fix/docs/etc.)
-
-## Code Style
-- Use meaningful variable and function names
-- Add comments for complex logic
-- Follow existing project patterns
-- Prioritize readability over cleverness
-
-## Workflow
-1. Understand the task completely before starting
-2. Plan the implementation approach
-3. Write clean, testable code
-4. Test the implementation thoroughly
-5. Update documentation as needed
-```
-
-### Set Up Memory Bank (Optional but Recommended)
-```bash
-mkdir memory_bank
-cd memory_bank
-touch project-brief.md tech-stack.md coding-standards.md
-```
-
-## 🎪 Step 4: Install MCP Servers (Optional)
-
-MCP servers extend Cline's capabilities. Here are the most popular ones:
-
-### GitHub Integration
-```bash
-npm install -g @modelcontextprotocol/server-github
-```
-
-### File System Access
-```bash
-npm install -g @modelcontextprotocol/server-filesystem
-```
-
-### Web Search
-```bash
-npm install -g @modelcontextprotocol/server-brave-search
-```
-
-### Configure MCP in Cline Settings
-Add to your Cline configuration:
-```json
-{
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_token_here"
-      }
-    },
-    "filesystem": {
-      "command": "npx", 
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/your/projects"]
-    }
-  }
-}
-```
-
-## 🧪 Step 5: Test Your Setup
-
-### Basic Functionality Test
-1. Open any code project in VS Code
-2. Open Cline panel (Ctrl/Cmd + Shift + P → "Cline: Open")
-3. Try this test prompt:
-
-```markdown
-Hello! I want to test our setup. Can you:
-
-1. Tell me what type of project this appears to be
-2. List the main files in the root directory
-3. Suggest one small improvement we could make
-
-This will help me verify everything is working correctly.
-```
-
-### Advanced Feature Test
-If you set up MCP servers, try:
-
-```markdown
-Can you help me understand this project better by:
-
-1. Using the file system to explore the project structure
-2. If this is a Git repository, check the recent commit history
-3. Look for any TODO comments or potential improvements
-
-Let's see how our MCP integration is working!
-```
-
-## 🎯 Step 6: Customize for Your Workflow
-
-### VS Code Settings for Cline
-Add these to your VS Code settings.json:
-```json
-{
-  "cline.autoSubmit": false,
-  "cline.showLineNumbers": true,
-  "cline.wordWrap": true,
-  "editor.inlineSuggest.enabled": true,
-  "editor.suggest.snippetsPreventQuickSuggestions": false
-}
-```
-
-### Keyboard Shortcuts
-Add these to your keybindings.json:
-```json
-[
-  {
-    "key": "ctrl+alt+c",
-    "command": "cline.open",
-    "when": "!cline.isOpen"
-  },
-  {
-    "key": "ctrl+alt+n", 
-    "command": "cline.newTask",
-    "when": "cline.isOpen"
-  }
-]
-```
-
-## 🚀 Step 7: Start Your First AI-Powered Project
-
-### Project Initialization Prompt
-```markdown
-I'm starting a new project and want to set it up with best practices. Here's what I'm building:
-
-**Project**: [Describe your project]
-**Technology Stack**: [Your preferred stack]
-**Main Features**: [List 3-5 key features]
-
-Can you help me:
-1. Set up the initial project structure
-2. Configure development tools (ESLint, Prettier, etc.)
-3. Create a basic README with setup instructions
-4. Set up a basic CI/CD pipeline
-5. Initialize version control with a good .gitignore
-
-Let's build this the right way from the start!
-```
-
-## 🔧 Troubleshooting Common Issues
-
-### Cline Not Responding
-1. Check your API key is valid
-2. Verify internet connection
-3. Restart VS Code
-4. Check the Cline output panel for errors
-
-### API Rate Limits
-- **Claude**: 50 requests/minute on free tier
-- **OpenAI**: Varies by plan
-- **Solution**: Upgrade plan or use OpenRouter for better limits
-
-### MCP Server Issues
-1. Verify Node.js is installed (v18+)
-2. Check MCP server installation: `npm list -g | grep mcp`
-3. Verify permissions for file system access
-4. Check Cline logs for MCP connection errors
-
-### Performance Issues
-- Large files: Use `.clineignore` to exclude unnecessary files
-- Slow responses: Try a different model or provider
-- High token usage: Be more specific in prompts
-
-## 📚 Next Steps
-
-### Essential Reading
-- [Prompt Engineering Guide](prompting-guide.md)
-- [Memory Bank Setup](memory-banks.md)
-- [Team Workflows](team-workflows.md)
-- [Best Practices](best-practices.md)
-
-### Community Resources
-- [Official Cline Discord](https://discord.gg/cline)
-- [Cline Documentation](https://docs.cline.bot/)
-- [GitHub Discussions](https://github.com/cline/cline/discussions)
-- [Reddit Community](https://reddit.com/r/cline/)
-
-### Recommended Learning Path
-1. **Week 1**: Master basic prompts and workflows
-2. **Week 2**: Set up advanced configuration and MCP servers
-3. **Week 3**: Implement team collaboration patterns
-4. **Week 4**: Contribute back to the community
-
-## 🎉 Success Checklist
-
-- [ ] Cline extension installed and working
-- [ ] API key configured and tested
-- [ ] `.clinerules` file created and customized
-- [ ] Memory bank set up (optional)
-- [ ] MCP servers installed (optional)
-- [ ] First successful prompt tested
-- [ ] VS Code settings optimized
-- [ ] Keyboard shortcuts configured
-- [ ] Troubleshooting guide bookmarked
-
-## 💡 Pro Tips for New Users
-
-1. **Start Simple**: Begin with basic prompts before trying complex workflows
-2. **Read Existing Code**: Always ask Cline to understand your project first
-3. **Iterate Gradually**: Make small changes and test frequently
-4. **Use Memory Bank**: Document patterns and decisions for consistency
-5. **Join the Community**: Learn from other developers' experiences
-6. **Experiment Safely**: Use version control to experiment fearlessly
-7. **Give Feedback**: Help improve Cline by reporting issues and suggestions
-
----
-
-**🎊 Congratulations!** You're now ready to supercharge your development workflow with Cline. 
-
-**Next up**: Try the [Essential Prompts Collection](../prompts/README.md) to see what's possible!
-
-*Happy coding! 🚀*
+- For authentication and provider errors, check the configured account, model access and provider response.
+- For missing context, identify the relevant files explicitly and keep project notes current.
+- For unexpected changes, inspect the diff and reduce the next task's scope.
+- For Cline configuration issues, consult the official documentation rather than relying on version-specific settings from older examples.
